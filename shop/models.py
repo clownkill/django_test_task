@@ -1,7 +1,13 @@
+import os
+
 from django.db import models
 from django.core.validators import MinValueValidator
 
 from .validators import image_extension_validator
+
+
+def generate_path(instance, filename):
+    return os.path.join('images', instance.title, filename)
 
 
 class Product(models.Model):
@@ -32,7 +38,7 @@ class Product(models.Model):
     )
     image = models.ImageField(
         'Изображение',
-        upload_to='images/%Y/%m/%d',
+        upload_to= generate_path,
         validators=[image_extension_validator,],
         null=True,
         blank=True,
@@ -45,3 +51,4 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
