@@ -2,6 +2,7 @@ import os
 
 from django.db import models
 from django.core.validators import MinValueValidator
+from PIL import Image
 
 from .validators import image_extension_validator
 
@@ -52,3 +53,10 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self):
+        super().save()
+
+        image_path = self.image.path
+        file_name, ext = os.path.splitext(image_path)
+        img = Image.open(image_path).convert('RGB')
+        img.save(f'{file_name}.webp', 'WEBP')
