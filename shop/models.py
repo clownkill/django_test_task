@@ -53,8 +53,8 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self):
-        super().save()
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
         image_path = self.image.path
         file_name, ext = os.path.splitext(image_path)
