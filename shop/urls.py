@@ -4,9 +4,9 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register('api', views.EntityViewSet)
+router.register('products', views.ProductViewSet)
 
-app_name = 'api'
+app_name = 'products'
 
 urlpatterns = [
     path('', include(router.urls)),
