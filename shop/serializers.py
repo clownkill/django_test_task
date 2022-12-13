@@ -8,6 +8,7 @@ from .services import convert_image
 
 class ProductSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
+    status = serializers.CharField(source='get_status_display')
 
     class Meta:
         model = Product
