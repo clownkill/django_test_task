@@ -3,6 +3,7 @@ import os
 from rest_framework import serializers
 
 from .models import Product
+from .services import convert_image
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -21,7 +22,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_image(self, instance):
         file_name, ext = os.path.splitext(instance.image.url)
+        convert_image(instance)
         return {
             'path': file_name,
-            'formats': [ext.replace('.',''), 'webp']
+            'formats': [ext.replace('.', ''), 'webp']
         }

@@ -2,7 +2,6 @@ import os
 
 from django.db import models
 from django.core.validators import MinValueValidator
-from PIL import Image
 
 from .validators import image_extension_validator
 
@@ -39,7 +38,7 @@ class Product(models.Model):
     )
     image = models.ImageField(
         'Изображение',
-        upload_to= generate_path,
+        upload_to=generate_path,
         validators=[image_extension_validator,],
         null=True,
         blank=True,
@@ -52,11 +51,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        image_path = self.image.path
-        file_name, ext = os.path.splitext(image_path)
-        img = Image.open(image_path).convert('RGB')
-        img.save(f'{file_name}.webp', 'WEBP')
